@@ -1,0 +1,35 @@
+body{
+}
+
+#theader{
+	background-color:#4287f5;
+	color:white;
+	font-weight:bold;
+	font-family:"Trebuchet MS",Arial;
+	border-collapse:collapse;
+	padding-bottom: 12px;
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+#claims
+{
+	table-layout:fixed;
+	white-space:pre;
+	border-spacing:5px;
+}
+
+#claims td
+{
+	font-family:arial;
+	font-size:12px;
+	width:100%;
+}
+
+#claims tr{
+	margin-top:0.5px;
+	margin-bottom:0.5px;
+}
+
+#claims tr:nth-child(even){background-color: #f2f2f2;}

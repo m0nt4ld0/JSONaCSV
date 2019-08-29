@@ -1,0 +1,63 @@
+<html>
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Mariela Montaldo">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    
+    <!-- Scripts -->
+    <script type="text/javascript" src="js/formatter.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+    <title>Parsear archivo JSON</title>
+</head>
+<body>
+    <h2>Parseo de JSON</h2>
+    <div id="instrucciones">
+        <ol>
+            <li>Click en "Seleccionar archivo".</li>
+            <li>Se abre una ventana para elegir un archivo. 
+            Busque el archivo, haga click en el mismo y presione "Abrir".
+            </li>
+            <li>Click en "Parsear". Puede tardar un instante si el archivo tiene muchos registros.</li>
+            <li>Click en "Descargar archivo" para descargar un archivo en formato CSV con el mismo contenido que se muestra en la tabla.</li>
+        </ol>
+    </div>
+    Seleccionar archivo JSON: <input type="file" name="" id="jsonfile">
+    <button id="btnParse">Parsear</button>
+	<button id="btnDownload">Descargar archivo</button>
+    <button onclick="showHide('claims-table')">Mostrar/Ocultar</button>
+    <div id="claims-table">
+        <table id="claims"></table>
+    </div>
+        <script>
+        //Solicitar al usuario el archivo JSON
+        document.getElementById('btnParse').addEventListener('click', function(){
+            var file = document.getElementById('jsonfile').files[0];
+            var reader = new FileReader();
+            reader.readAsText(file, 'UTF-8');
+            reader.onload = function(evt) {
+                //"Limpiar" la tabla (por si se hizo click antes)
+                document.getElementById('claims').innerHTML = '<tbody><tr id="tHeader"></tr></tbody>';
+                // Parsear archivo JSON
+				var x = evt.target.result; 
+                var objeto = JSON.parse(x);
+                //Imprime la cabecera de la tabla
+                imprimeHeader(objeto,"claims");
+                // Imprime las filas y columnas de la tabla
+                imprimeTabla(objeto,"claims");
+            }
+        });
+		
+		//Descargar archivo
+		document.getElementById('btnDownload').addEventListener('click', function(){
+			var html = document.querySelector("table").outerHTML;
+			var filename = document.getElementById('jsonfile').files[0].name.split('.',1)[0];
+			exportarCSV(html, filename);
+        });
+        </script>
+</body>
+</html>
